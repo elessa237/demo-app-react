@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {render} from "react-dom";
 
 function AddCard({produit}) {
     const name = produit.stocked ? <h4>{produit.name}</h4> : <h4 className="text-danger">{produit.name}</h4>;
@@ -25,8 +26,7 @@ function Card({produits, texte, inStock}) {
         if (produit.name.indexOf(texte) === -1) {
             return
         }
-        if ((produit.stocked === false) && (inStock === true))
-        {
+        if ((produit.stocked === false) && (inStock === true)) {
             return;
         }
         card.push(
@@ -65,7 +65,7 @@ function Search({texte, check, onTexteChange, onCheckChange}){
     );
 }
 
-function App(){
+function App() {
     const [texte, setTexte] = useState("");
     const [check, setCheck] = useState(false);
 
@@ -137,4 +137,10 @@ const PRODUCTS = [
     }
 ]
 
-export default App;
+class ProduitElement extends HTMLElement{
+    connectedCallback() {
+        render(<App/>, this)
+    }
+}
+
+customElements.define('produits-tag', ProduitElement);
