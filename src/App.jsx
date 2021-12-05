@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {render} from "react-dom";
 
 function AddCard({produit}) {
     const name = produit.stocked ? <h4>{produit.name}</h4> : <h4 className="text-danger">{produit.name}</h4>;
@@ -65,7 +66,7 @@ function Search({texte, check, onTexteChange, onCheckChange}){
     );
 }
 
-function App(){
+function Produits(){
     const [texte, setTexte] = useState("");
     const [check, setCheck] = useState(false);
 
@@ -137,4 +138,9 @@ const PRODUCTS = [
     }
 ]
 
-export default App;
+class ProduitsElement extends HTMLElement{
+    connectedCallback () {
+        render(<Produits />, this)
+    }
+}
+customElements.define('produits-tag', ProduitsElement);
